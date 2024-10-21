@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cp3sx65lva0ck"]
+
+[ext_resource type="Script" path="res://splash.gd" id="1_7ejnp"]
+[ext_resource type="SpriteFrames" uid="uid://quw4w5kclwm3" path="res://Assets/Sprites/NoHorseBarred.aseprite" id="1_wp8sp"]
+[ext_resource type="AudioStream" uid="uid://dksqslmj466p5" path="res://Assets/Sound/HorseRacingBasic.wav" id="2_s6vli"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_7ejnp")
+
+[node name="Background" type="StaticBody2D" parent="."]
+scale = Vector2(3.375, 3.375)
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+offset_right = 342.0
+offset_bottom = 193.0
+color = Color(0, 0, 0, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Background"]
+position = Vector2(170, 96)
+scale = Vector2(1.33, 1.33)
+sprite_frames = ExtResource("1_wp8sp")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_s6vli")
+autoplay = true
