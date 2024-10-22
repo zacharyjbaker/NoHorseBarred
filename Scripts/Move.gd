@@ -14,11 +14,11 @@ func _physics_process(delta: float) -> void:
 		velocity.x =  -WALK_SPEED
 		animated_sprite.play("Run")
 		#print ("running speed:", WALK_SPEED)
-		if Input.is_action_just_pressed(move_input):
-			WALK_SPEED = WALK_SPEED + 20
+		if Input.is_action_just_pressed(move_input) and WALK_SPEED < 200:
+			WALK_SPEED = WALK_SPEED + 8
 		#animated_sprite.stop()
 		if (WALK_SPEED > 10):
-			WALK_SPEED = WALK_SPEED - 0.5
+			WALK_SPEED = WALK_SPEED - 0.65
 		else:
 			WALK_SPEED = 10
 			
