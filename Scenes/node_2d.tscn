@@ -1,0 +1,192 @@
+[gd_scene load_steps=22 format=3 uid="uid://bcfyo6gwg5ieq"]
+
+[ext_resource type="PackedScene" uid="uid://76wrr5ffujvo" path="res://Assets/Prefabs/pirate.tscn" id="1_abmkl"]
+[ext_resource type="Script" path="res://Scripts/airship.gd" id="1_x57yo"]
+[ext_resource type="Texture2D" uid="uid://732hi67632u6" path="res://Scenes/Airship.png" id="2_jscmm"]
+[ext_resource type="Script" path="res://Scenes/spawner.gd" id="4_t1ybb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1x8g"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(0, 0, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndmxk"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(0, 64, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrgvi"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(78, 64, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_icmdy"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(156, 64, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glki1"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(156, 0, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8fvl8"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(234, 0, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fntau"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(234, 64, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4xb4"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(0, 128, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glejf"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(78, 128, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_neleh"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(156, 128, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_heo4w"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(234, 128, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_esxbu"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(0, 192, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apjem"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(78, 192, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nx687"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(156, 192, 78, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ddfrr"]
+atlas = ExtResource("2_jscmm")
+region = Rect2(78, 0, 78, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fiqua"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1x8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndmxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jrgvi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_icmdy")
+}],
+"loop": false,
+"name": &"Charge",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_glki1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8fvl8")
+}],
+"loop": true,
+"name": &"Charged",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fntau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4xb4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_glejf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_neleh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heo4w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_esxbu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apjem")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nx687")
+}],
+"loop": false,
+"name": &"Fire",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1x8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddfrr")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 9.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r1dt5"]
+size = Vector2(222, 152)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 2988.0
+offset_bottom = 1290.0
+color = Color(0.69, 0.67965, 0.5658, 1)
+
+[node name="Pirate" parent="." instance=ExtResource("1_abmkl")]
+position = Vector2(97, 828)
+
+[node name="Airship" type="CharacterBody2D" parent="."]
+position = Vector2(131, 100)
+script = ExtResource("1_x57yo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Airship"]
+texture_filter = 1
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_fiqua")
+animation = &"Charge"
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://Assets/Sprites/Airship.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "5bb8ff16cd8d0788118200d83b9fe5a5"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Airship"]
+visible = false
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_r1dt5")
+
+[node name="Timer" type="Timer" parent="Airship"]
+
+[node name="Spawners" type="Node" parent="."]
+
+[node name="Spawner1" type="Node2D" parent="Spawners"]
+position = Vector2(2806, 125)
+script = ExtResource("4_t1ybb")
+
+[node name="Timer" type="Timer" parent="Spawners/Spawner1"]
+
+[connection signal="animation_finished" from="Airship/AnimatedSprite2D" to="Airship" method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="frame_changed" from="Airship/AnimatedSprite2D" to="Airship" method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="timeout" from="Spawners/Spawner1/Timer" to="Spawners/Spawner1" method="_on_timer_timeout"]
