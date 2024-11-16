@@ -1,12 +1,14 @@
 extends CharacterBody2D
 @onready var timer = $Timer
 @onready var anim = $AnimatedSprite2D
+@export var health : Node
 var fireball_proj = preload("res://Assets/Prefabs/fireball.tscn")
 
 const SPEED = 300.0
 var MAX_SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 var friction = 0.1
+var hp = 3
 
 var isPrefiring = false
 var isFiring = false
@@ -80,3 +82,7 @@ func shoot() -> void:
 		fireball.position = position + Vector2(-90, 50)
 	#print (velocity.norma	lized().x)
 	get_tree().root.add_child(fireball)
+
+func lost_hp() -> void:
+	hp -= 1
+	health.lost_hp(hp)

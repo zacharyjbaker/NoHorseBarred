@@ -14,6 +14,7 @@ func _physics_process(delta: float) -> void:
 	
 func _on_timer_timeout() -> void:
 	var pirate = pirate_spawn.instantiate()
+	#pirate.position = position
 	#print (velocity.norma	lized().x)
 	get_tree().root.add_child(pirate)
 	var random_num = rng.randf_range(5.0, 20.0)

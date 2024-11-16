@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://dy3vsnug4gtin"]
+
+[ext_resource type="Script" path="res://Scripts/evil_projectile.gd" id="1_wch3i"]
+[ext_resource type="Texture2D" uid="uid://c7te0y7pwmdex" path="res://Assets/Prefabs/EvilFireball.png" id="2_83rlb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2ed0"]
+atlas = ExtResource("2_83rlb")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6v3y7"]
+atlas = ExtResource("2_83rlb")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u5cii"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p2ed0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6v3y7")
+}],
+"loop": true,
+"name": &"Fire",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x1ruh"]
+radius = 18.0
+
+[node name="EvilFireball" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_wch3i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_u5cii")
+animation = &"Fire"
+frame_progress = 0.397242
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://Assets/Sprites/EvilFireball.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "3c22e3d0c49ecf517fb555214d998a05"
+
+[node name="HitBox" type="CollisionShape2D" parent="." groups=["fireball"]]
+shape = SubResource("CircleShape2D_x1ruh")

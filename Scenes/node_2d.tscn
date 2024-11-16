@@ -1,9 +1,74 @@
-[gd_scene load_steps=22 format=3 uid="uid://bcfyo6gwg5ieq"]
+[gd_scene load_steps=32 format=3 uid="uid://bcfyo6gwg5ieq"]
 
 [ext_resource type="PackedScene" uid="uid://76wrr5ffujvo" path="res://Assets/Prefabs/pirate.tscn" id="1_abmkl"]
+[ext_resource type="Texture2D" uid="uid://u3yci8e78ddm" path="res://Scenes/Health.png" id="1_qhwvr"]
 [ext_resource type="Script" path="res://Scripts/airship.gd" id="1_x57yo"]
+[ext_resource type="Script" path="res://Scenes/Health.gd" id="2_5jyiv"]
 [ext_resource type="Texture2D" uid="uid://732hi67632u6" path="res://Scenes/Airship.png" id="2_jscmm"]
 [ext_resource type="Script" path="res://Scenes/spawner.gd" id="4_t1ybb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ifkk"]
+size = Vector2(3048, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4o3y2"]
+atlas = ExtResource("1_qhwvr")
+region = Rect2(96, 32, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m3ohl"]
+atlas = ExtResource("1_qhwvr")
+region = Rect2(192, 32, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijv0m"]
+atlas = ExtResource("1_qhwvr")
+region = Rect2(0, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_otbe7"]
+atlas = ExtResource("1_qhwvr")
+region = Rect2(96, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkgij"]
+atlas = ExtResource("1_qhwvr")
+region = Rect2(192, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h80qj"]
+atlas = ExtResource("1_qhwvr")
+region = Rect2(0, 32, 96, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cfyak"]
+animations = [{
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_4o3y2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m3ohl")
+}],
+"loop": true,
+"name": &"OneHP",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_ijv0m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_otbe7")
+}],
+"loop": true,
+"name": &"ThreeHP",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_hkgij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h80qj")
+}],
+"loop": true,
+"name": &"TwoHP",
+"speed": 4.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m1x8g"]
 atlas = ExtResource("2_jscmm")
@@ -142,16 +207,51 @@ size = Vector2(222, 152)
 [node name="Node2D" type="Node2D"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
+offset_top = 107.0
 offset_right = 2988.0
 offset_bottom = 1290.0
 color = Color(0.69, 0.67965, 0.5658, 1)
 
-[node name="Pirate" parent="." instance=ExtResource("1_abmkl")]
-position = Vector2(97, 828)
+[node name="UIArea" type="StaticBody2D" parent="."]
 
-[node name="Airship" type="CharacterBody2D" parent="."]
-position = Vector2(131, 100)
+[node name="ColorRect2" type="ColorRect" parent="UIArea"]
+offset_right = 2988.0
+offset_bottom = 108.0
+color = Color(0.71, 0.6035, 0.6035, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UIArea"]
+visible = false
+position = Vector2(1514, 50)
+shape = SubResource("RectangleShape2D_8ifkk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="UIArea"]
+texture_filter = 1
+position = Vector2(146, 54)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_cfyak")
+animation = &"ThreeHP"
+script = ExtResource("2_5jyiv")
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://Assets/Sprites/Health.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "fd1472f5d45cf7c782288fcaa184f418"
+
+[node name="Pirate" parent="." instance=ExtResource("1_abmkl")]
+position = Vector2(85, 804)
+
+[node name="Airship" type="CharacterBody2D" parent="." node_paths=PackedStringArray("health")]
+position = Vector2(137, 291)
 script = ExtResource("1_x57yo")
+health = NodePath("../UIArea/AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Airship"]
 texture_filter = 1
@@ -172,7 +272,7 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "5bb8ff16cd8d0788118200d83b9fe5a5"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Airship"]
+[node name="HitBox" type="CollisionShape2D" parent="Airship" groups=["ship"]]
 visible = false
 position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_r1dt5")
@@ -182,11 +282,25 @@ shape = SubResource("RectangleShape2D_r1dt5")
 [node name="Spawners" type="Node" parent="."]
 
 [node name="Spawner1" type="Node2D" parent="Spawners"]
-position = Vector2(2806, 125)
+position = Vector2(2839, 352)
 script = ExtResource("4_t1ybb")
 
 [node name="Timer" type="Timer" parent="Spawners/Spawner1"]
 
+[node name="Spawner2" type="Node2D" parent="Spawners"]
+position = Vector2(2836, 645)
+script = ExtResource("4_t1ybb")
+
+[node name="Timer" type="Timer" parent="Spawners/Spawner2"]
+
+[node name="Spawner3" type="Node2D" parent="Spawners"]
+position = Vector2(2840, 1002)
+script = ExtResource("4_t1ybb")
+
+[node name="Timer" type="Timer" parent="Spawners/Spawner3"]
+
 [connection signal="animation_finished" from="Airship/AnimatedSprite2D" to="Airship" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="frame_changed" from="Airship/AnimatedSprite2D" to="Airship" method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="timeout" from="Spawners/Spawner1/Timer" to="Spawners/Spawner1" method="_on_timer_timeout"]
+[connection signal="timeout" from="Spawners/Spawner2/Timer" to="Spawners/Spawner2" method="_on_timer_timeout"]
+[connection signal="timeout" from="Spawners/Spawner3/Timer" to="Spawners/Spawner3" method="_on_timer_timeout"]

@@ -30,7 +30,7 @@ radius = 18.0
 
 [node name="Fireball" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 8
+collision_mask = 0
 script = ExtResource("1_jd4dq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -52,5 +52,5 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "a79a82f2b75967bc1315c002fc9cce1c"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="HitBox" type="CollisionShape2D" parent="." groups=["fireball"]]
 shape = SubResource("CircleShape2D_x1ruh")

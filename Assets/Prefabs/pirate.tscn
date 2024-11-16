@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://76wrr5ffujvo"]
+[gd_scene load_steps=9 format=3 uid="uid://76wrr5ffujvo"]
 
 [ext_resource type="Script" path="res://Scenes/pirate.gd" id="1_6isd2"]
 [ext_resource type="Texture2D" uid="uid://c6ll8qwcoujnd" path="res://Scenes/Pirate.png" id="2_8jyom"]
@@ -35,9 +35,14 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nqq4q"]
 size = Vector2(32.3334, 30)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o155v"]
+size = Vector2(32.3333, 30)
+
 [node name="Pirate" type="CharacterBody2D"]
 position = Vector2(1375, 120)
 scale = Vector2(-3, 3)
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_6isd2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -61,3 +66,17 @@ metadata/_aseprite_wizard_source_file_hash_ = "78bb1fa8794947262c0f554def6db355"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.166641, 0.333336)
 shape = SubResource("RectangleShape2D_nqq4q")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-0.16667, 0.333344)
+shape = SubResource("RectangleShape2D_o155v")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[connection signal="body_entered" from="HurtBox" to="." method="_on_hurt_box_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
