@@ -1,0 +1,77 @@
+[gd_scene load_steps=8 format=3 uid="uid://btausesspflol"]
+
+[ext_resource type="Script" path="res://Scripts/debris.gd" id="1_id18v"]
+[ext_resource type="Texture2D" uid="uid://blu7rwvq1atq6" path="res://Assets/Prefabs/Debris1.png" id="2_2voom"]
+[ext_resource type="AudioStream" uid="uid://cad75qvdw4bq7" path="res://Assets/SFX/enemyfire.mp3" id="3_d5yso"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qp1l7"]
+atlas = ExtResource("2_2voom")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j2fwc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qp1l7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nqq4q"]
+size = Vector2(22, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o155v"]
+size = Vector2(32.3333, 24.2457)
+
+[node name="SmallDebris" type="CharacterBody2D" groups=["smalldebris", "spawned"]]
+position = Vector2(1375, 120)
+scale = Vector2(-3, 3)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_id18v")
+SPEED = 130.0
+MAX_SPEED = 130.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_j2fwc")
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://Assets/Sprites/Debris1.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "aeafaf2ce1c799daf9b336eae7d64e39"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.666656, 0.166672)
+shape = SubResource("RectangleShape2D_nqq4q")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+visible = false
+position = Vector2(-0.16667, 0.333344)
+shape = SubResource("RectangleShape2D_o155v")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_d5yso")
+volume_db = -3.611
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="area_shape_entered" from="HurtBox" to="." method="_on_hurt_box_area_shape_entered"]
+[connection signal="body_entered" from="HurtBox" to="." method="_on_hurt_box_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

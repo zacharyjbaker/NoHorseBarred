@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dy3vsnug4gtin"]
+[gd_scene load_steps=8 format=3 uid="uid://dy3vsnug4gtin"]
 
 [ext_resource type="Script" path="res://Scripts/evil_projectile.gd" id="1_wch3i"]
 [ext_resource type="Texture2D" uid="uid://c7te0y7pwmdex" path="res://Assets/Prefabs/EvilFireball.png" id="2_83rlb"]
@@ -25,12 +25,15 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hxhjy"]
+size = Vector2(52, 54)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_x1ruh"]
 radius = 18.0
 
-[node name="EvilFireball" type="CharacterBody2D"]
-collision_layer = 2
-collision_mask = 0
+[node name="EvilFireball" type="CharacterBody2D" groups=["spawned"]]
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("1_wch3i")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -53,5 +56,15 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "3c22e3d0c49ecf517fb555214d998a05"
 
-[node name="HitBox" type="CollisionShape2D" parent="." groups=["fireball"]]
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, 4.76837e-07)
+shape = SubResource("RectangleShape2D_hxhjy")
+
+[node name="HitBox" type="CollisionShape2D" parent="." groups=["evil_fireball"]]
 shape = SubResource("CircleShape2D_x1ruh")
+
+[connection signal="body_shape_entered" from="HurtBox" to="." method="_on_hurt_box_body_shape_entered"]
